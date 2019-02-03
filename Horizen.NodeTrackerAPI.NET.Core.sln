@@ -3,8 +3,6 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2015
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Horizen.NodeTracker.API.NET.Core", "ZenCashAPI.NET.Core\Horizen.NodeTracker.API.NET.Core.csproj", "{832018C1-404F-4EB7-927A-B35B6210B5E9}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Horizen.NodeTracker.API.Net.Standard", "Horizen.NodeTracker.API.Net.Standard\Horizen.NodeTracker.API.Net.Standard.csproj", "{53A8DF69-A55F-4A7E-A299-E2717C9FF7E9}"
 EndProject
 Global
@@ -13,10 +11,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{832018C1-404F-4EB7-927A-B35B6210B5E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{832018C1-404F-4EB7-927A-B35B6210B5E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{832018C1-404F-4EB7-927A-B35B6210B5E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{832018C1-404F-4EB7-927A-B35B6210B5E9}.Release|Any CPU.Build.0 = Release|Any CPU
 		{53A8DF69-A55F-4A7E-A299-E2717C9FF7E9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{53A8DF69-A55F-4A7E-A299-E2717C9FF7E9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{53A8DF69-A55F-4A7E-A299-E2717C9FF7E9}.Release|Any CPU.ActiveCfg = Release|Any CPU
