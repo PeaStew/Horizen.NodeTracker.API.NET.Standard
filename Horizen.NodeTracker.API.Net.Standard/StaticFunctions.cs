@@ -33,37 +33,31 @@ namespace Horizen.NodeTracker.API.NET.Standard
             }
         }
 
-        public static string GetServer(NodeType nodeType, ServerRegion region, ServerNumber number)
+        public static string GetServer(NodeType nodeType, ServerRegion serverRegion, int? serverNumber)
         {
+            var region = GetServerRegion(serverRegion);
+            var number = GetServerNumber(serverRegion, serverNumber);
             switch (nodeType)
             {
                 case NodeType.SECURE:
-                    return "https://securenodes" + GetServerNumber(number) + "." + GetServerRegion(region) + ".zensystem.io";
+                    return "https://securenodes" + number + "." + region + ".zensystem.io";
                 case NodeType.SUPER:
-                    return "https://supernodes" + GetServerNumber(number) + "." + GetServerRegion(region) + ".zensystem.io";
+                    return "https://supernodes" + number + "." + region + ".zensystem.io";
                 default:
                     throw new Exception("Node server type not found");
             }
         }       
 
 
-        public static string GetServerNumber(ServerNumber number)
+        public static string GetServerNumber(ServerRegion serverRegion, int? number)
         {
-            switch (number)
+            if (!number.HasValue) return string.Empty;
+            switch (serverRegion)
             {
-                case ServerNumber.ONE:
-                    return "1";
-                case ServerNumber.TWO:
-                    return "2";
-                case ServerNumber.THREE:
-                    return "3";
-                case ServerNumber.FOUR:
-                    return "4";
-                case ServerNumber.FIVE:
-                    return "5";
-                case ServerNumber.SIX:
-                    return "6";
-                case ServerNumber.NONE:
+                case ServerRegion.EU:
+                    return number < 7 && number > 0? number.ToString() : string.Empty;
+                case ServerRegion.NA:
+                    return number < 5 && number > 0 ? number.ToString() : string.Empty;
                 default:
                     return string.Empty;
             }

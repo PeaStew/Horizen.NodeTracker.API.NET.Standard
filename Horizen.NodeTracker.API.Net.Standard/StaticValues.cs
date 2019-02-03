@@ -9,11 +9,6 @@ namespace Horizen.NodeTracker.API.NET.Standard
         NONE, NA, EU
     }
 
-    public enum ServerNumber
-    {
-        NONE, ONE, TWO, THREE, FOUR, FIVE, SIX
-    }
-
     public enum NodeType
     {
         SECURE, SUPER
