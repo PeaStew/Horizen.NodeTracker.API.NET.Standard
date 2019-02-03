@@ -116,7 +116,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
 
         public static string MyEarnings(APIKey apikey, int nodeid, string category = null)
         {
-            return "/api/nodes/my/list?key=" + apikey + (nodeid > 0 ? "&nid=" + nodeid : "") + (!string.IsNullOrEmpty(category)? "&cat=" + category: "");
+            return "/api/nodes/my/earnings?key=" + apikey + (nodeid > 0 ? "&nid=" + nodeid : "") + (!string.IsNullOrEmpty(category)? "&cat=" + category: "");
         }
     }
 
