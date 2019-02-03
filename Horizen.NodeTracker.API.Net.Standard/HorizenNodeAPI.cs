@@ -73,7 +73,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
         */
         public static HorizenNodeAPIDataModels.MyNodes GetMyNodes(APIKey apikey, int? servernumber, string category = null, ServerRegion serverregion = ServerRegion.NONE, NodeStatus nodestatus = NodeStatus.NONE)
         {
-            return JsonConvert.DeserializeObject<HorizenNodeAPIDataModels.MyNodes>(GetQueryJson(apikey.APINodeType, serverregion, servernumber, APINonPagedCallUrlParts.MyNodes(apikey, nodestatus)));
+            return JsonConvert.DeserializeObject<HorizenNodeAPIDataModels.MyNodes>(GetQueryJson(apikey.APINodeType, serverregion, servernumber, APINonPagedCallUrlParts.MyNodes(apikey, nodestatus, category)));
         }
 
         /* Path: /api/nodes/my/earnings?key=<apikey>
@@ -83,7 +83,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
         */
         public static HorizenNodeAPIDataModels.MyEarnings GetMyEarnings(APIKey apikey, int? servernumber, int nodeid = 0, string category = null, ServerRegion serverregion = ServerRegion.NONE)
         {
-            return JsonConvert.DeserializeObject<HorizenNodeAPIDataModels.MyEarnings>(GetQueryJson(apikey.APINodeType, serverregion, servernumber, APINonPagedCallUrlParts.MyEarnings(apikey, nodeid)));
+            return JsonConvert.DeserializeObject<HorizenNodeAPIDataModels.MyEarnings>(GetQueryJson(apikey.APINodeType, serverregion, servernumber, APINonPagedCallUrlParts.MyEarnings(apikey, nodeid, category)));
         }
         #endregion
 
@@ -96,7 +96,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
         */
         public static HorizenNodeAPIDataModels.MyDowntimes GetMyDowntimes(APIKey apikey, int pageservernumber, int rowcount, int? servernumber, int nodeid = 0, string category = null, DowntimeStatus downtimestatus = DowntimeStatus.NONE, ServerRegion serverregion = ServerRegion.NONE)
         {
-            return JsonConvert.DeserializeObject<HorizenNodeAPIDataModels.MyDowntimes>(GetQueryJson(apikey.APINodeType, serverregion, servernumber, APIPagedCallUrlParts.MyDowntimes(apikey, pageservernumber, rowcount, nodeid, downtimestatus)));
+            return JsonConvert.DeserializeObject<HorizenNodeAPIDataModels.MyDowntimes>(GetQueryJson(apikey.APINodeType, serverregion, servernumber, APIPagedCallUrlParts.MyDowntimes(apikey, pageservernumber, rowcount, nodeid, downtimestatus, category)));
         }
 
         /* Path: /api/nodes/my/exceptions?key=<apikey>&page=<pageservernumber>&rows=<rowcount>
@@ -106,7 +106,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
         */
         public static HorizenNodeAPIDataModels.MyExceptions GetMyExceptions(APIKey apikey, int pageservernumber, int rowcount, int? servernumber, int nodeid = 0, string category = null, ExceptionStatus exceptionstatus = ExceptionStatus.NONE, ServerRegion serverregion = ServerRegion.NONE)
         {
-            return JsonConvert.DeserializeObject<HorizenNodeAPIDataModels.MyExceptions>(GetQueryJson(apikey.APINodeType, serverregion, servernumber, APIPagedCallUrlParts.MyExceptions(apikey, pageservernumber, rowcount, nodeid, exceptionstatus)));
+            return JsonConvert.DeserializeObject<HorizenNodeAPIDataModels.MyExceptions>(GetQueryJson(apikey.APINodeType, serverregion, servernumber, APIPagedCallUrlParts.MyExceptions(apikey, pageservernumber, rowcount, nodeid, exceptionstatus, category)));
         }
 
         /* Path: /api/nodes/my/challenges?key=<apikey>&page=<pageservernumber>&rows=<rowcount>
@@ -116,7 +116,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
         */
         public static HorizenNodeAPIDataModels.MyChallenges GetMyChallenges(APIKey apikey, int pageservernumber, int rowcount, int? servernumber, int nodeid = 0, string category = null, ChallengeResult challengestatus = ChallengeResult.NONE, ServerRegion serverregion = ServerRegion.NONE)
         {
-            return JsonConvert.DeserializeObject<HorizenNodeAPIDataModels.MyChallenges>(GetQueryJson(apikey.APINodeType, serverregion, servernumber, APIPagedCallUrlParts.MyChallenges(apikey, pageservernumber, rowcount, nodeid, challengestatus)));
+            return JsonConvert.DeserializeObject<HorizenNodeAPIDataModels.MyChallenges>(GetQueryJson(apikey.APINodeType, serverregion, servernumber, APIPagedCallUrlParts.MyChallenges(apikey, pageservernumber, rowcount, nodeid, challengestatus, category)));
         }
 
         /* Path: /api/nodes/my/payments?key=<apikey>&page=<pageservernumber>&rows=<rowcount>
@@ -127,7 +127,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
 
         public static HorizenNodeAPIDataModels.MyPayments GetMyPayments(APIKey apikey, int pageservernumber, int rowcount, int? servernumber, int nodeid = 0, string category = null, PaymentStatus paymentstatus = PaymentStatus.NONE, ServerRegion serverregion = ServerRegion.NONE)
         {
-            return JsonConvert.DeserializeObject<HorizenNodeAPIDataModels.MyPayments>(GetQueryJson(apikey.APINodeType, serverregion, servernumber, APIPagedCallUrlParts.MyPayments(apikey, pageservernumber, rowcount, nodeid, paymentstatus)));
+            return JsonConvert.DeserializeObject<HorizenNodeAPIDataModels.MyPayments>(GetQueryJson(apikey.APINodeType, serverregion, servernumber, APIPagedCallUrlParts.MyPayments(apikey, pageservernumber, rowcount, nodeid, paymentstatus, category)));
         }
         #endregion
 
