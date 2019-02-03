@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ZenCashAPI.NET.Core
+namespace Horizen.NodeTracker.API.NET.Core
 {
     public static class Converters
     {

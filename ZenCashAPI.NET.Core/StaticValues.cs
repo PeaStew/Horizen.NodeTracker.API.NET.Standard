@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 
-namespace ZenCashAPI.NET.Core
+namespace Horizen.NodeTracker.API.NET.Core
 {
     public enum ServerRegion
     {

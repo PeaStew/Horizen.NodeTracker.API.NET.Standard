@@ -7,7 +7,7 @@ using System.Text.RegularExpressions;
 using System.Threading;
 using System.Threading.Tasks;
 
-namespace ZenCashAPI.NET.Core
+namespace Horizen.NodeTracker.API.NET.Core
 {
     public partial class HorizenNodeAPIDataModels
     {

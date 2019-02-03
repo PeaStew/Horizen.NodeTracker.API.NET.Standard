@@ -1,8 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using Horizen.NodeTracker.API.NET.Core;
 
-namespace ZenCashAPI.NET.Core
+namespace Horizen.NodeTracker.API.NET.Core
 {
     public static class APIServer
     {
