@@ -20,14 +20,14 @@ namespace Horizen.NodeTracker.API.NET.Standard
             }
         }
 
-        public static string GetServer(NodeType nodeType, ServerRegion region)
+        public static string GetServer(NodeType nodeType, ServerRegion serverRegion)
         {
             switch (nodeType)
             {
                 case NodeType.SECURE:
-                    return "https://securenodes." + GetServerRegion(region) + ".zensystem.io";
+                    return "https://securenodes." + GetServerRegion(serverRegion) + ".zensystem.io";
                 case NodeType.SUPER:
-                    return "https://supernodes." + GetServerRegion(region) + ".zensystem.io";
+                    return "https://supernodes." + GetServerRegion(serverRegion) + ".zensystem.io";
                 default:
                     throw new Exception("Node server type not found");
             }
@@ -49,23 +49,23 @@ namespace Horizen.NodeTracker.API.NET.Standard
         }       
 
 
-        public static string GetServerNumber(ServerRegion serverRegion, int? number)
+        public static string GetServerNumber(ServerRegion serverRegion, int? serverNumber)
         {
-            if (!number.HasValue) return string.Empty;
+            if (!serverNumber.HasValue) return string.Empty;
             switch (serverRegion)
             {
                 case ServerRegion.EU:
-                    return number < 7 && number > 0? number.ToString() : string.Empty;
+                    return serverNumber < 7 && serverNumber > 0? serverNumber.ToString() : string.Empty;
                 case ServerRegion.NA:
-                    return number < 5 && number > 0 ? number.ToString() : string.Empty;
+                    return serverNumber < 5 && serverNumber > 0 ? serverNumber.ToString() : string.Empty;
                 default:
                     return string.Empty;
             }
         }
 
-        public static string GetServerRegion(ServerRegion region)
+        public static string GetServerRegion(ServerRegion serverRegion)
         {
-            switch (region)
+            switch (serverRegion)
             {
                 case ServerRegion.EU:
                     return "eu";
@@ -84,106 +84,106 @@ namespace Horizen.NodeTracker.API.NET.Standard
         public const string ServerList = "/api/srvlist";
         public const string ServerEarnings = "/api/earnings";
         public const string ServerOpenChallenges = "/api/chal/open";
-        public static string NodeCertStatus(int nodeid)
+        public static string NodeCertStatus(int nodeId)
         {
-            return "/api/node/" + nodeid + "/certstatus";
+            return "/api/node/" + nodeId + "/certstatus";
         }
     }
 
     public static class APINonPagedCallUrlParts
     {
-        public static string NodeDetail(APIKey apikey, int nodeid)
+        public static string NodeDetail(APIKey apiKey, int nodeId)
         {
-            return "/api/nodes/" + nodeid + "/detail?key=" + apikey.APIkey;
+            return "/api/nodes/" + nodeId + "/detail?key=" + apiKey.APIkey;
         }
 
-        public static string MyNodes(APIKey apikey, NodeStatus nodestatus = NodeStatus.NONE, string category = null)
+        public static string MyNodes(APIKey apiKey, NodeStatus nodeStatus = NodeStatus.NONE, string category = null)
         {
-            var retval = "/api/nodes/my/list?key=" + apikey.APIkey;
-            switch (nodestatus)
+            var retVal = "/api/nodes/my/list?key=" + apiKey.APIkey;
+            switch (nodeStatus)
             {
                 case NodeStatus.UP:
-                    retval += "&status=up";
+                    retVal += "&status=up";
                     break;
                 case NodeStatus.DOWN:
-                    retval += "&status=down";
+                    retVal += "&status=down";
                     break;
             }
 
-            if (!string.IsNullOrEmpty(category)) retval += "&cat=" + category;
-            return retval;
+            if (!string.IsNullOrEmpty(category)) retVal += "&cat=" + category;
+            return retVal;
         }
 
-        public static string MyEarnings(APIKey apikey, int nodeid, string category = null)
+        public static string MyEarnings(APIKey apiKey, int nodeId, string category = null)
         {
-            return "/api/nodes/my/earnings?key=" + apikey + (nodeid > 0 ? "&nid=" + nodeid : "") + (!string.IsNullOrEmpty(category)? "&cat=" + category: "");
+            return "/api/nodes/my/earnings?key=" + apiKey + (nodeId > 0 ? "&nid=" + nodeId : "") + (!string.IsNullOrEmpty(category)? "&cat=" + category: "");
         }
     }
 
     public static class APIPagedCallUrlParts
     {
-        public static string MyDowntimes(APIKey apikey, int pagenumber, int rowcount, int nodeid = 0, DowntimeStatus downtimestatus = DowntimeStatus.NONE, string category = null)
+        public static string MyDowntimes(APIKey apiKey, int pageNumber, int rowCount, int nodeId = 0, DowntimeStatus downtimeStatus = DowntimeStatus.NONE, string category = null)
         {
-            var retval = "/api/nodes/my/downtimes?key=" + apikey.APIkey + "&page=" + pagenumber + "&rows=" + rowcount + (nodeid > 0 ? "&nid=" + nodeid : "") + (!string.IsNullOrEmpty(category) ? "&cat=" + category : "");
-            switch (downtimestatus)
+            var retVal = "/api/nodes/my/downtimes?key=" + apiKey.APIkey + "&page=" + pageNumber + "&rows=" + rowCount + (nodeId > 0 ? "&nid=" + nodeId : "") + (!string.IsNullOrEmpty(category) ? "&cat=" + category : "");
+            switch (downtimeStatus)
             {
                 case DowntimeStatus.OPEN:
-                    return retval + "&status=o";
+                    return retVal + "&status=o";
                 case DowntimeStatus.CLOSED:
-                    return retval + "&status=c";
+                    return retVal + "&status=c";
                 case DowntimeStatus.EXCLUDE:
-                    return retval + "&status=x";
+                    return retVal + "&status=x";
                 case DowntimeStatus.NONE:
                 default:
-                    return retval;
+                    return retVal;
             }
         }
 
-        public static string MyExceptions(APIKey apikey, int pagenumber, int rowcount, int nodeid = 0, ExceptionStatus exceptionstatus = ExceptionStatus.NONE, string category = null)
+        public static string MyExceptions(APIKey apiKey, int pageNumber, int rowCount, int nodeId = 0, ExceptionStatus exceptionStatus = ExceptionStatus.NONE, string category = null)
         {
-            var retval = "/api/nodes/my/exceptions?key=" + apikey.APIkey + "&page=" + pagenumber + "&rows=" + rowcount + (nodeid > 0 ? "&nid=" + nodeid : "") + (!string.IsNullOrEmpty(category) ? "&cat=" + category : "");
+            var retVal = "/api/nodes/my/exceptions?key=" + apiKey.APIkey + "&page=" + pageNumber + "&rows=" + rowCount + (nodeId > 0 ? "&nid=" + nodeId : "") + (!string.IsNullOrEmpty(category) ? "&cat=" + category : "");
 
-            switch (exceptionstatus)
+            switch (exceptionStatus)
             {
                 case ExceptionStatus.OPEN:
-                    return retval + "&status=o";
+                    return retVal + "&status=o";
                 case ExceptionStatus.CLOSED:
-                    return retval + "&status=c";
+                    return retVal + "&status=c";
                 case ExceptionStatus.EXCLUDE:
-                    return retval + "&status=x";
+                    return retVal + "&status=x";
                 case ExceptionStatus.NONE:
                 default:
-                    return retval;
+                    return retVal;
             }
         }
 
-        public static string MyChallenges(APIKey apikey, int pagenumber, int rowcount, int nodeid = 0, ChallengeResult challengeresult = ChallengeResult.NONE, string category = null)
+        public static string MyChallenges(APIKey apiKey, int pageNumber, int rowCount, int nodeId = 0, ChallengeResult challengeResult = ChallengeResult.NONE, string category = null)
         {
-            var retval = "/api/nodes/my/challenges?key=" + apikey.APIkey + "&page=" + pagenumber + "&rows=" + rowcount + (nodeid > 0 ? "&nid=" + nodeid : "") + (!string.IsNullOrEmpty(category) ? "&cat=" + category : "");
+            var retVal = "/api/nodes/my/challenges?key=" + apiKey.APIkey + "&page=" + pageNumber + "&rows=" + rowCount + (nodeId > 0 ? "&nid=" + nodeId : "") + (!string.IsNullOrEmpty(category) ? "&cat=" + category : "");
 
-            switch (challengeresult)
+            switch (challengeResult)
             {
                 case ChallengeResult.PASS:
-                    return retval + "&result=pass";
+                    return retVal + "&result=pass";
                 case ChallengeResult.FAIL:
-                    return retval + "&result=fail";
+                    return retVal + "&result=fail";
                 case ChallengeResult.NONE:
                 default:
-                    return retval;
+                    return retVal;
             }
         }
 
-        public static string MyPayments(APIKey apikey, int pagenumber, int rowcount, int nodeid = 0, PaymentStatus paymentstatus = PaymentStatus.NONE, string category = null)
+        public static string MyPayments(APIKey apiKey, int pageNumber, int rowCount, int nodeId = 0, PaymentStatus paymentStatus = PaymentStatus.NONE, string category = null)
         {
-            var retval = "/api/nodes/my/Payments?key=" + apikey.APIkey + "&page=" + pagenumber + "&rows=" + rowcount + (nodeid > 0 ? "&nid=" + nodeid : "") + (!string.IsNullOrEmpty(category) ? "&cat=" + category : "");
+            var retVal = "/api/nodes/my/Payments?key=" + apiKey.APIkey + "&page=" + pageNumber + "&rows=" + rowCount + (nodeId > 0 ? "&nid=" + nodeId : "") + (!string.IsNullOrEmpty(category) ? "&cat=" + category : "");
 
-            switch (paymentstatus)
+            switch (paymentStatus)
             {
                 case PaymentStatus.EXCLUDE:
-                    return retval + "&status=exclude";
+                    return retVal + "&status=exclude";
                 case PaymentStatus.NONE:
                 default:
-                    return retval;
+                    return retVal;
             }
         }
     }
