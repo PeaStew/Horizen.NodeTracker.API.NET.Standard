@@ -15,7 +15,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
         public class ServerStats
         {
             /* API Call: /api/srvstats
-             * Expected return: {"server":"ts1.na","region":"na","state":"up","nodes":1050,"up":967,"down":41,"inactive":42,"regional":{"total":4293,"up":3948,"down":180,"inactive":161},"global":{"total":12179,"up":11443,"down":404,"inactive":326},"estearn":"0.0213"}
+             * Expected return: {"server":"ts2.eu","region":"eu","state":"up","nodes":2324,"up":2256,"down":41,"inactive":27,"foreign":1,"regional":{"na":{"total":8853,"up":8564,"down":130,"inactive":159},"eu":{"total":13711,"up":13307,"down":235,"inactive":169}},"global":{"total":22564,"up":21871,"down":365,"inactive":328},"estearn":"0.0329","actualearn":"0.0385","cfCheck":"healthy"}
              */
 
             public string server { get; set; }
@@ -25,11 +25,28 @@ namespace Horizen.NodeTracker.API.NET.Standard
             public int up { get; set; }
             public int down { get; set; }
             public int inactive { get; set; }
+            public int foreign { get; set; }
             public Regional regional { get; set; }
             public Global global { get; set; }
             public string estearn { get; set; }
+            public string actualearn { get; set; }
+            public string cfCheck { get; set; }
 
             public class Regional
+            {
+                public Na na { get; set; }
+                public Eu eu { get; set; }
+            }
+
+            public class Na
+            {
+                public int total { get; set; }
+                public int up { get; set; }
+                public int down { get; set; }
+                public int inactive { get; set; }
+            }
+
+            public class Eu
             {
                 public int total { get; set; }
                 public int up { get; set; }
@@ -46,6 +63,8 @@ namespace Horizen.NodeTracker.API.NET.Standard
             }
         }
 
+
+
         public class ServerList
         {
             /* API Call: /api/srvlist
@@ -55,7 +74,6 @@ namespace Horizen.NodeTracker.API.NET.Standard
             public string[][] regions { get; set; }
             public string[] servers { get; set; }
         }
-
 
         public class ServerEarnings
         {
@@ -88,38 +106,35 @@ namespace Horizen.NodeTracker.API.NET.Standard
         public class NodeCertStatus
         {
             /* API Call: /api/node/<node_id>/certstatus
-            * Expected return: {"valid":true,"msg":"Hostname zzz.f4240.in matches CN zzz.f4240.in","certinfo":{"subject":{"CN":"zzz.f4240.in"},"issuer":{"C":"US","O":"Let's Encrypt","CN":"Let's Encrypt Authority X3"}},"checked":"2018-05-31T21:21:56.987Z","trynext":false}            */
+            * Expected return: {"validCert":true,"subject":{"CN":"*.safunodes.win"},"issuer":"Let's Encrypt Authority X3","validTo":"Apr  8 04:04:19 2019 GMT","zenIp":"2a0d:3001:2100:b002:5::63ba","ipMatch":true,"valid":true,"zend":{"zip6":"2a0d:3001:2100:b002:5::63ba","port":"32107"}}            */
 
+            public bool validCert { get; set; }
+            public Subject subject { get; set; }
+            public string issuer { get; set; }
+            public string validTo { get; set; }
+            public string zenIp { get; set; }
+            public bool ipMatch { get; set; }
             public bool valid { get; set; }
-            public string msg { get; set; }
-            public Certinfo certinfo { get; set; }
-            public DateTime _checked { get; set; }
-            public bool trynext { get; set; }
-
-            public class Certinfo
-            {
-                public Subject subject { get; set; }
-                public Issuer issuer { get; set; }
-            }
+            public Zend zend { get; set; }
 
             public class Subject
             {
                 public string CN { get; set; }
             }
 
-            public class Issuer
+            public class Zend
             {
-                public string C { get; set; }
-                public string O { get; set; }
-                public string CN { get; set; }
+                public string zip6 { get; set; }
+                public string port { get; set; }
             }
         }
+
         #endregion
         #region Nodes - API  - Non-Paged Requests
 
         public class NodeDetail
         {
-            /* Path: /api/nodes/<nodeid>/detail?key=<apikey>
+            /* Path: /api/nodes/<nodeid>/detail?key=<apikey> 
              * Return: returns node details for given nodeid.  If the email of the API key matches the email of the node, the node t-address and stake t-address are also returned as 'taddr' and 'stkaddr'. Any open Exceptions and Downtimes are also returned.
             * Expected return: {"id":9,"status":"up","home":"ts1-testnet.na","curserver":"ts1-testnet.na","ip4":"198.58.105.60","ip6":null,"fqdn":"zen1.secnodes.com","config":{"hw":{"CPU":"Intel(R) Xeon(R) CPU E5-2697 v4 @ 2.30GHz","cores":1,"speed":2299},"node":{"version":2001050,"wallet.version":60000,"protocolversion":170002},"trkver":"0.2.1"},"createdAt":"2017-10-16T19:24:11.000Z","updatedAt":"2018-06-13T22:38:25.000Z","taddr":"ztTYagRWzHZuiZxFTuhTgUZigFyoHNBe65s","stkaddr":"ztaj8xNwDjkLxMYWHnWLCvaxHYLmDQzwcxZ","email":"myemail@gmail.com","exceptions":[{"id":40184,"etype":"chalmax","start":"2018-05-02T17:06:40.000Z","check":"2018-06-13T22:40:22.000Z","end":null}],"hasException":true,"downtimes":[],"category":"mynodes"}
             */
@@ -194,13 +209,12 @@ namespace Horizen.NodeTracker.API.NET.Standard
             }
         }
 
-
         public class MyNodes
         {
             /* Path: /api/nodes/my/list?key=<apikey>
              * Optional Parameters:  &status=<status>  where <status> can be 'up' or 'down'. e.g. &status=up
              * Return: array of nodes associated with the node email address linked to the API key. 
-            * Expected return: {"id":9,"status":"up","home":"ts1-testnet.na","curserver":"ts1-testnet.na","ip4":"198.58.105.60","ip6":null,"fqdn":"zen1.secnodes.com","config":{"hw":{"CPU":"Intel(R) Xeon(R) CPU E5-2697 v4 @ 2.30GHz","cores":1,"speed":2299},"node":{"version":2001050,"wallet.version":60000,"protocolversion":170002},"trkver":"0.2.1"},"createdAt":"2017-10-16T19:24:11.000Z","updatedAt":"2018-06-13T22:38:25.000Z","taddr":"ztTYagRWzHZuiZxFTuhTgUZigFyoHNBe65s","stkaddr":"ztaj8xNwDjkLxMYWHnWLCvaxHYLmDQzwcxZ","email":"myemail@gmail.com","exceptions":[{"id":40184,"etype":"chalmax","start":"2018-05-02T17:06:40.000Z","check":"2018-06-13T22:40:22.000Z","end":null}],"hasException":true}
+            * Expected return: {"nodes":[{"id":18323,"status":"up","home":"ts5.eu","curserver":"ts5.eu","ip4":null,"ip6":"2a0d:3001:2100:a003:1::6dc0","fqdn":"cs001.ninjanodes.win","createdAt":"2018-01-12T21:34:30.000Z","updatedAt":"2019-02-08T20:54:47.000Z","email":"nodetracking@gmail.com","category":"cs","zenver":2001650,"trkver":"0.3.1"}]}
             */
             public List<Node> nodes { get; set; }
 
@@ -210,17 +224,17 @@ namespace Horizen.NodeTracker.API.NET.Standard
                 public string status { get; set; }
                 public string home { get; set; }
                 public string curserver { get; set; }
-                public string ip4 { get; set; }
+                public object ip4 { get; set; }
                 public string ip6 { get; set; }
                 public string fqdn { get; set; }
                 public DateTime createdAt { get; set; }
                 public DateTime updatedAt { get; set; }
                 public string email { get; set; }
+                public string category { get; set; }
                 public int zenver { get; set; }
                 public string trkver { get; set; }
             }
         }
-
 
         public class MyEarnings
         {
@@ -248,6 +262,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
                 public DateTime added { get; set; }
             }
         }
+
         #endregion
 
         #region Nodes - API  - Paged Requests
@@ -264,17 +279,18 @@ namespace Horizen.NodeTracker.API.NET.Standard
             /* Path: /api/nodes/my/downtimes?key=<apikey>&page=<pagenumber>&rows=<rowcount>
              * Optional Parameters:  &nid=<nodeid>  return only for specified node. e.g. &nid=435, &status=<status>  where <status> is 'o' for open or 'c' for closed.  e.g. &status=o
              * Return: Downtimes for all nodes associated with the API key.
-            * Expected return: {"page":1,"total":79,"rowsperpage":"10","records":781,"rows":[{"id":120679,"fqdn":"zen1.secnodes.com","home":"ts1-testnet.na","curserver":"ts1-testnet.na","start":"2018-06-12T06:06:20.000Z","check":"2018-06-12T06:19:14.000Z","end":"2018-06-12T06:19:29.000Z","duration":789000,"dtype":"sys","nid":9}]}
+            * Expected return: {"page":1,"total":77992,"rowsperpage":1,"records":77992,"rows":[{"id":15522292,"status":"c","fqdn":"pf992.ultrameganodes.win","home":"ts6.eu","curserver":"ts6.eu","start":"2019-02-08T16:10:44.000Z","check":"2019-02-08T16:12:15.000Z","end":"2019-02-08T16:12:40.000Z","duration":116000,"dtype":"zend","nid":165286}]}
             */
             public int page { get; set; }
             public int total { get; set; }
-            public string rowsperpage { get; set; }
+            public int rowsperpage { get; set; }
             public int records { get; set; }
             public Row[] rows { get; set; }
 
             public class Row
             {
                 public int id { get; set; }
+                public string status { get; set; }
                 public string fqdn { get; set; }
                 public string home { get; set; }
                 public string curserver { get; set; }
@@ -287,34 +303,33 @@ namespace Horizen.NodeTracker.API.NET.Standard
             }
         }
 
-
         public class MyExceptions
         {
             /* Path: /api/nodes/my/exceptions?key=<apikey>&page=<pagenumber>&rows=<rowcount>
              * Optional Parameters:  &nid=<nodeid>  return only for specified node.  e.g. &nid=435,  &status=<status>  where <status> is 'o' for open or 'c' for closed.   e.g. &status=o
              * Return: Exceptions for all nodes associated with the API key.
-            * Expected return: {"page":1,"total":1,"rowsperpage":"10","records":8,"rows":[{"id":40184,"fqdn":"zen1.secnodes.com","home":"ts1-testnet.na","start":"2018-05-02T17:06:40.000Z","check":"2018-06-13T22:03:22.000Z","end":null,"duration":3646602000,"etype":"chalmax","nid":9}]}
+            * Expected return: {"page":1,"total":89669,"rowsperpage":1,"records":89669,"rows":[{"id":17324776,"status":"c","fqdn":"dgn163.ninjanodes.win","home":"ts3.na","start":"2019-02-08T21:04:11.000Z","check":"2019-02-08T21:05:27.000Z","end":"2019-02-08T21:05:27.000Z","duration":76000,"etype":"cert","nid":123763}]}
             */
             public int page { get; set; }
             public int total { get; set; }
-            public string rowsperpage { get; set; }
+            public int rowsperpage { get; set; }
             public int records { get; set; }
             public Row[] rows { get; set; }
 
             public class Row
             {
                 public int id { get; set; }
+                public string status { get; set; }
                 public string fqdn { get; set; }
                 public string home { get; set; }
                 public DateTime start { get; set; }
                 public DateTime check { get; set; }
-                public object end { get; set; }
-                public long duration { get; set; }
+                public DateTime end { get; set; }
+                public int duration { get; set; }
                 public string etype { get; set; }
                 public int nid { get; set; }
             }
         }
-
 
         public class MyChallenges
         {
@@ -325,7 +340,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
             */
             public int page { get; set; }
             public int total { get; set; }
-            public string rowsperpage { get; set; }
+            public int rowsperpage { get; set; }
             public int records { get; set; }
             public Row[] rows { get; set; }
 
@@ -336,25 +351,24 @@ namespace Horizen.NodeTracker.API.NET.Standard
                 public string home { get; set; }
                 public int nid { get; set; }
                 public DateTime start { get; set; }
-                public object received { get; set; }
-                public object reply { get; set; }
-                public object run { get; set; }
+                public DateTime received { get; set; }
+                public int reply { get; set; }
+                public int run { get; set; }
                 public string result { get; set; }
-                public object reason { get; set; }
+                public string reason { get; set; }
             }
         }
-
 
         public class MyPayments
         {
             /* Path: /api/nodes/my/payments?key=<apikey>&page=<pagenumber>&rows=<rowcount>
              * Optional Parameters:    &nid=<nodeid>  return only for specified node.  e.g. &nid=435,  &status=<status>  where <status> is 'exclude'  e.g. &status=exclude
              * Return: Payments and Credits for all nodes associated with the API key. The type is 'e' for earnings and 'c' for credit
-            * Expected return: {"page":61,"total":91,"rowsperpage":"10","records":903,"rows":[{"id":243031,"status":"exclude","startdate":"2017-12-13T12:32:32.000Z","enddate":"2017-12-13T18:55:17.000Z","pmid":496,"type":"e","uptime":"0.7774","zen":"0.00000000","created":"2017-12-13T19:24:24.000Z","paidat":null,"txid":null}]}
+            * Expected return: {"page":1,"total":338547,"rowsperpage":1,"records":338547,"rows":[{"id":24976690,"status":"exclude","startdate":"2019-02-07T03:11:13.000Z","enddate":"2019-02-08T03:20:19.000Z","pmid":1948,"type":"e","uptime":"0.0000","zen":"0.00000000","created":"2019-02-08T03:35:52.000Z","paidat":null,"txid":null,"creditpmids":null,"nid":96572}]}
             */
             public int page { get; set; }
             public int total { get; set; }
-            public string rowsperpage { get; set; }
+            public int rowsperpage { get; set; }
             public int records { get; set; }
             public Row[] rows { get; set; }
 
@@ -362,17 +376,20 @@ namespace Horizen.NodeTracker.API.NET.Standard
             {
                 public int id { get; set; }
                 public string status { get; set; }
-                public DateTime? startdate { get; set; }
-                public DateTime? enddate { get; set; }
+                public DateTime startdate { get; set; }
+                public DateTime enddate { get; set; }
                 public int pmid { get; set; }
                 public string type { get; set; }
                 public string uptime { get; set; }
                 public string zen { get; set; }
                 public DateTime created { get; set; }
-                public DateTime? paidat { get; set; }
+                public DateTime paidat { get; set; }
                 public string txid { get; set; }
+                public string creditpmids { get; set; }
+                public int nid { get; set; }
             }
         }
+
         #endregion
     }
 
