@@ -8,7 +8,7 @@ using System.Threading;
 using System.Threading.Tasks;
 
 namespace Horizen.NodeTracker.API.NET.Standard
-{ 
+{
     public partial class HorizenNodeAPIDataModels
     {
         #region API - Public
@@ -60,17 +60,16 @@ namespace Horizen.NodeTracker.API.NET.Standard
         public class ServerEarnings
         {
             /* API Call: /api/earnings
-             * Expected return: {"stake":42,"zenbtc":0.00402976,"btcusd":7519,"zenusd":30.29976544,"zenearned":41231.42601336,"zenpaidusd":"1249302.54"}
+             * Expected return: {"lastactual":0.03851091,"stake":42,"zenbtc":0.001212,"btcusd":3651.93113436,"zenusd":4.42614053484432,"zenearned":198375.86162042,"zenpaidusd":"878039.44"}
              */
-            public float stake { get; set; }
+            public float lastactual { get; set; }
+            public int stake { get; set; }
             public float zenbtc { get; set; }
             public float btcusd { get; set; }
             public float zenusd { get; set; }
             public float zenearned { get; set; }
             public string zenpaidusd { get; set; }
         }
-
-
 
         public class ServerOpenChallenges
         {
