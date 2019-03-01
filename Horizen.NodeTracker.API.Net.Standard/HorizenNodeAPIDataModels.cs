@@ -106,7 +106,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
         public class NodeCertStatus
         {
             /* API Call: /api/node/<node_id>/certstatus
-            * Expected return: {"validCert":true,"subject":{"CN":"*.safunodes.win"},"issuer":"Let's Encrypt Authority X3","validTo":"Apr  8 04:04:19 2019 GMT","zenIp":"2a0d:3001:2100:b002:5::63ba","ipMatch":true,"valid":true,"zend":{"zip6":"2a0d:3001:2100:b002:5::63ba","port":"32107"}}            */
+            * Expected return: {"validCert":true,"subject":{"CN":"*.domain.com"},"issuer":"Let's Encrypt Authority X3","validTo":"Apr  8 04:04:19 2019 GMT","zenIp":"address","ipMatch":true,"valid":true,"zend":{"zip6":"address","port":"32107"}}            */
 
             public bool validCert { get; set; }
             public Subject subject { get; set; }
@@ -214,7 +214,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
             /* Path: /api/nodes/my/list?key=<apikey>
              * Optional Parameters:  &status=<status>  where <status> can be 'up' or 'down'. e.g. &status=up
              * Return: array of nodes associated with the node email address linked to the API key. 
-            * Expected return: {"nodes":[{"id":18323,"status":"up","home":"ts5.eu","curserver":"ts5.eu","ip4":null,"ip6":"2a0d:3001:2100:a003:1::6dc0","fqdn":"cs001.ninjanodes.win","createdAt":"2018-01-12T21:34:30.000Z","updatedAt":"2019-02-08T20:54:47.000Z","email":"nodetracking@gmail.com","category":"cs","zenver":2001650,"trkver":"0.3.1"}]}
+            * Expected return: {"nodes":[{"id":18323,"status":"up","home":"ts5.eu","curserver":"ts5.eu","ip4":null,"ip6":"2a0d:3001:2100:a003:1::6dc0","fqdn":"domain.com","createdAt":"2018-01-12T21:34:30.000Z","updatedAt":"2019-02-08T20:54:47.000Z","email":"email@domain.com","category":"cs","zenver":2001650,"trkver":"0.3.1"}]}
             */
             public List<Node> nodes { get; set; }
 
@@ -241,7 +241,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
             /* Path: /api/nodes/my/earnings?key=<apikey>
              * Optional Parameters:   &nid=<nodeid>  return only for specified node. e.g. &nid=435
              * Return: array of nodes with their associated earnings to date along with a record count and summary data that include the total zen earned to date and the current price of Zen in USD. Data is associated with the node email address linked to the API key. 
-            * Expected return: {"records":2,"rows":[{"nid":9,"fqdn":"zen1.secnodes.com","zen":"484.41397152","added":"2017-10-16T19:24:11.000Z"},{"nid":12,"fqdn":"zen102.secnodes.com","zen":"5.22053245","added":"2017-10-16T19:25:06.000Z"}],"summary":{"totalzen":489.63450397,"zenusd":17.18517909073966}}
+            * Expected return: {"records":2,"rows":[{"nid":9,"fqdn":"domain.com","zen":"484.41397152","added":"2017-10-16T19:24:11.000Z"},{"nid":12,"fqdn":"domain.com","zen":"5.22053245","added":"2017-10-16T19:25:06.000Z"}],"summary":{"totalzen":489.63450397,"zenusd":17.18517909073966}}
             */
 
             public int records { get; set; }
@@ -268,7 +268,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
         #region Nodes - API  - Paged Requests
         /* The following API calls return paged results.The page number and row count must be passed in the search parameters of the request.  
 
-        Example: api/nodes/my/exceptions? key = 6201c79b86e4ec54048344512f1498c2ed5ba2c0&page= 1 & rows = 10
+        Example: api/nodes/my/exceptions? key = <API KEY>&page= 1 & rows = 10
 
         The result elements with data about the number of records, total pages and the current page number along with the items requested in the 'rows' array.The number of rows requested is returned as 'rowsperpage'.
         #endregion */
@@ -279,7 +279,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
             /* Path: /api/nodes/my/downtimes?key=<apikey>&page=<pagenumber>&rows=<rowcount>
              * Optional Parameters:  &nid=<nodeid>  return only for specified node. e.g. &nid=435, &status=<status>  where <status> is 'o' for open or 'c' for closed.  e.g. &status=o
              * Return: Downtimes for all nodes associated with the API key.
-            * Expected return: {"page":1,"total":77992,"rowsperpage":1,"records":77992,"rows":[{"id":15522292,"status":"c","fqdn":"pf992.ultrameganodes.win","home":"ts6.eu","curserver":"ts6.eu","start":"2019-02-08T16:10:44.000Z","check":"2019-02-08T16:12:15.000Z","end":"2019-02-08T16:12:40.000Z","duration":116000,"dtype":"zend","nid":165286}]}
+            * Expected return: {"page":1,"total":77992,"rowsperpage":1,"records":77992,"rows":[{"id":15522292,"status":"c","fqdn":"domain.com","home":"ts6.eu","curserver":"ts6.eu","start":"2019-02-08T16:10:44.000Z","check":"2019-02-08T16:12:15.000Z","end":"2019-02-08T16:12:40.000Z","duration":116000,"dtype":"zend","nid":165286}]}
             */
             public int page { get; set; }
             public int total { get; set; }
@@ -308,7 +308,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
             /* Path: /api/nodes/my/exceptions?key=<apikey>&page=<pagenumber>&rows=<rowcount>
              * Optional Parameters:  &nid=<nodeid>  return only for specified node.  e.g. &nid=435,  &status=<status>  where <status> is 'o' for open or 'c' for closed.   e.g. &status=o
              * Return: Exceptions for all nodes associated with the API key.
-            * Expected return: {"page":1,"total":89669,"rowsperpage":1,"records":89669,"rows":[{"id":17324776,"status":"c","fqdn":"dgn163.ninjanodes.win","home":"ts3.na","start":"2019-02-08T21:04:11.000Z","check":"2019-02-08T21:05:27.000Z","end":"2019-02-08T21:05:27.000Z","duration":76000,"etype":"cert","nid":123763}]}
+            * Expected return: {"page":1,"total":89669,"rowsperpage":1,"records":89669,"rows":[{"id":17324776,"status":"c","fqdn":"domain.com","home":"ts3.na","start":"2019-02-08T21:04:11.000Z","check":"2019-02-08T21:05:27.000Z","end":"2019-02-08T21:05:27.000Z","duration":76000,"etype":"cert","nid":123763}]}
             */
             public int page { get; set; }
             public int total { get; set; }
@@ -336,7 +336,7 @@ namespace Horizen.NodeTracker.API.NET.Standard
             /* Path: /api/nodes/my/challenges?key=<apikey>&page=<pagenumber>&rows=<rowcount>
              * Optional Parameters:   &nid=<nodeid>  return only for specified node.  e.g. &nid=435, &result=<result>  where <result> is 'pass' or 'fail'.   e.g. &result=fail
              * Return: Challenge results for all nodes associated with the API key.
-            * Expected return: {"page":1,"total":320,"rowsperpage":"10","records":3199,"rows":[{"id":333694,"fqdn":"zen1.secnodes.com","home":"ts1-testnet.na","nid":9,"start":"2018-06-13T21:53:23.000Z","received":null,"reply":null,"run":null,"result":"wait","reason":null}]}
+            * Expected return: {"page":1,"total":320,"rowsperpage":"10","records":3199,"rows":[{"id":333694,"fqdn":"domain.com","home":"ts1-testnet.na","nid":9,"start":"2018-06-13T21:53:23.000Z","received":null,"reply":null,"run":null,"result":"wait","reason":null}]}
             */
             public int page { get; set; }
             public int total { get; set; }
